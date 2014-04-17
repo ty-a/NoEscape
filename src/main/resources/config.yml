@@ -1,0 +1,14 @@
+timer: 15 # in seconds
+
+PvE: true # player vs environment
+
+PvM: true # player vs monster
+
+ignore-falling: false # if damage from falling triggers NoEscape
+
+PvP: false # player vs player
+
+disabled-in-worlds: 
+ - world
+ 
+message: '&cYou can not use commands when taking damage!'

@@ -1,0 +1,19 @@
+name: NoEscape
+main: com.faceyspacies.NoEscape.NoEscape
+version: 1.0
+author: tehTyA
+
+commands:
+   noescape:
+      description: Reloads the configuration of the NoEscape plugin.
+      usage: /noescape reload
+      permission: NoEscape.reload
+      permission-message: You don't have permission to reload the config.
+
+permissions:
+   noescape.bypass:
+      description: allows to bypass the no command restriction
+      default: op
+   noescape.reload:
+      description: allows to reload the config
+      default: op
