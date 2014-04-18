@@ -1,14 +1,15 @@
-timer: 15 # in seconds
-
-PvE: true # player vs environment
-
-PvM: true # player vs monster
-
-ignore-falling: false # if damage from falling triggers NoEscape
-
-PvP: false # player vs player
-
+#Time after receiving damage, during which the player can't use any commands.
+timer: 15
+#Should we disable using commands when a player gets hurt from the environment? (burning, drowning, etc.)
+PvE: true
+#Should we disable using commands when a player gets hurt from mobs?
+PvM: true
+#Should we disable using commands when a player gets hurt from falling?
+ignore-falling: false
+#Should we disable using commands when a player gets in a fight with another player?
+PvP: false
+#List of worlds that ignore the plugin.
 disabled-in-worlds: 
- - world
- 
+ - world_example
+#Message that is sent to the players when they try to use commands after receiving damage. Supports & color codes.
 message: '&cYou can not use commands when taking damage!'
