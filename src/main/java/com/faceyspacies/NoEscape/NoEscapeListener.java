@@ -64,26 +64,32 @@ public class NoEscapeListener implements Listener {
 		if(event.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK ||
 				event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION ||
 				event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
-		
-			if( hitPlayer || causedByPlayer ) { 
-				if(this.plugin.getConfig().getBoolean("PvM")) {
-					if( hitPlayer && !causedByPlayer ) {
-						if(!((Player)damagee).hasPermission("noescape.bypass"))
-							createTask((Player)damagee); // player is hit by entity
-					}
-					else if ( !hitPlayer && causedByPlayer ) {
-						if(this.plugin.getConfig().getBoolean("PvM")) {
-							if(!((Player)(((EntityDamageByEntityEvent) event).getDamager())).hasPermission("noescape.bypass"))
-								createTask((Player)(((EntityDamageByEntityEvent) event).getDamager()));
-							// player is hitting something not human
-						}
-					}
+			
+			if(!hitPlayer) {
+				if(NoEscape.safeMobs.contains(event.getEntity().getType())) {
+					return; // player hit a safe to hit mob
 				}
-				
-				if(this.plugin.getConfig().getBoolean("PvP")) {
+			}
+			
+			if( !hitPlayer && causedByPlayer ) { 
+				if(this.plugin.getConfig().getBoolean("PvM")) {
+					if(!((Player)(((EntityDamageByEntityEvent) event).getDamager())).hasPermission("noescape.bypass"))
+						createTask((Player)(((EntityDamageByEntityEvent) event).getDamager())); // player hit entity
+				}
+			}
+			
+			else if( hitPlayer && !causedByPlayer ) {
+				if(this.plugin.getConfig().getBoolean("PvM")) {
 					if(!((Player)damagee).hasPermission("noescape.bypass"))
 						createTask((Player)damagee);
+				}
+			}
 				
+			if(this.plugin.getConfig().getBoolean("PvP")) {
+				if( hitPlayer && causedByPlayer ) {
+					if(!((Player)damagee).hasPermission("noescape.bypass"))
+						createTask((Player)damagee);
+			
 					if(!((Player)(((EntityDamageByEntityEvent) event).getDamager())).hasPermission("noescape.bypass"))
 						createTask((Player)(((EntityDamageByEntityEvent) event).getDamager()));
 				}

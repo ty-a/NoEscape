@@ -18,12 +18,14 @@ import java.util.List;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class NoEscape extends JavaPlugin {
 	
 	protected static List<Player> NoEscapePlayers = new LinkedList<Player>();
+	protected static List<EntityType> safeMobs = new LinkedList<EntityType>();
 	
 	@Override
 	public void onEnable() {
@@ -31,6 +33,13 @@ public class NoEscape extends JavaPlugin {
 		
 		getCommand("noescape").setExecutor(this);
 		getServer().getPluginManager().registerEvents(new NoEscapeListener(this), this);
+		
+		List<String> safeMobsFromConfig = this.getConfig().getStringList("safe-mobs");
+		for(String element: safeMobsFromConfig) {
+			element = element.toUpperCase().replace(" ", "_");
+			if(EntityType.valueOf(element) != null )
+				safeMobs.add(EntityType.valueOf(element));
+		}		
 	}
 	
 	@Override

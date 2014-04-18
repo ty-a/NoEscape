@@ -13,3 +13,14 @@ disabled-in-worlds:
  - world_example
 #Message that is sent to the players when they try to use commands after receiving damage. Supports & color codes.
 message: '&cYou can not use commands when taking damage!'
+# Mobs when attacked by the player that will not restrict use of command
+safe-mobs:
+ - cow
+ - sheep
+ - chicken
+ - horse
+ - pig
+ - mushroom cow
+ - squid
+ - snowman
+ - villager
