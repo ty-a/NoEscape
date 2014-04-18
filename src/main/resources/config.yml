@@ -4,7 +4,7 @@ timer: 15
 PvE: true
 #Should we disable using commands when a player gets hurt from mobs?
 PvM: true
-#Should we disable using commands when a player gets hurt from falling?
+#Should we let player use commands after taking damage from falling?
 ignore-falling: false
 #Should we disable using commands when a player gets in a fight with another player?
 PvP: false
