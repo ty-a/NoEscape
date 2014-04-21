@@ -1,18 +1,76 @@
 #Time after receiving damage, during which the player can't use any commands.
 timer: 15
-#Should we disable using commands when a player gets hurt from the environment? (burning, drowning, etc.)
-PvE: true
-#Should we disable using commands when a player gets hurt from mobs?
+
+
+#Should we check for updates to the plugin? 
+# If an update is found, the console will report it when the plugin is loaded.
+check-for-updates: true
+
+#Should we auto-update the plugin?
+#The new version will be downloaded and used once the server reloads or restarts
+#If this is true, check-for-updates is assumed to be true
+auto-update: true
+
+
+#Should we disable using commands when a player gets hurt from mobs? 
+#This only includes damage from their attacks, explosions, thorn enchantments and arrows
 PvM: true
-#Should we let player use commands after taking damage from falling?
-ignore-falling: false
 #Should we disable using commands when a player gets in a fight with another player?
+#This only includes damage from their attacks, explosions, thorn enchantments and arrows
 PvP: false
+
+#If a player is falling, should we let them use commands?
+while-falling-allow-commands: false
+#How many blocks should be beneath them to prevent command useage?
+#Note: Setting this too low can mean you're unable to use commands after jumping or 
+#      walking over the edge of a steep hill
+air-amount-to-count: 5
+
+
+#Should we let players use commands while drowning?
+ignore-drowning: false
+#Should we let players use commands while starving?
+ignore-starvation: false
+#Should we let players use commands after touching lava?
+ignore-lava: false
+#Should we let players use commands while taking damage from poison?
+ignore-poison: false
+#Should we let players use commands while suffocating from being inside blocks?
+ignore-suffocation: false
+#Should we let players use commands after contact with a pointy block, like a cactus?
+ignore-contact: false
+#Should we let players use commands after being near an exploding block?
+ignore-block-explosion: false
+#Should we let players use commands after being hit with a falling block?
+ignore-falling-block: false
+#Should we let players use commands after coming in contact with fire?
+ignore-fire: false
+#Should we reset the timer whenever the fire causes damage?
+ignore-fire-tick: false
+#Should we let players use commands after being struck by lightning?
+ignore-lightning: false
+#Should we let players use commands after being hit with magic?
+ignore-magic: false
+#Should we let players use commands after taking damage from a snowman melting?
+ignore-snowman-melting: false
+#Should we let players use commands while taking damage from the wither affect?
+ignore-wither: false
+#Should we let players use commands while taking damage in the void?
+ignore-void: false
+#Should we let players use commands after committing suicide by /kill?
+ignore-suicide: true
+#Should we disable commands from custom sources (such as other plugins)?
+ignore-custom = false
+
 #List of worlds that ignore the plugin.
 disabled-in-worlds: 
  - world_example
+ 
+ 
 #Message that is sent to the players when they try to use commands after receiving damage. Supports & color codes.
-message: '&cYou can not use commands when taking damage!'
+message: '&cYou can not use commands when taking damage or falling!'
+
+
 # Mobs when attacked by the player that will not restrict use of command
 safe-mobs:
  - cow
@@ -24,3 +82,10 @@ safe-mobs:
  - squid
  - snowman
  - villager
+
+
+# Commands allowed to be used when commands are restricted
+whitelisted-commands:
+ - help
+ - noescape
+ - kill

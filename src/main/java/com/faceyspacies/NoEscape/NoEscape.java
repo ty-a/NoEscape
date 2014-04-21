@@ -16,6 +16,8 @@ package com.faceyspacies.NoEscape;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.gravitydevelopment.updater.Updater;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
@@ -30,6 +32,43 @@ public class NoEscape extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		this.saveDefaultConfig(); // shouldn't override actual config if it exist
+		
+		if(this.getConfig().getBoolean("auto-update")) {
+			Updater updater = new Updater(this, 78377, this.getFile(), Updater.UpdateType.DEFAULT, false);
+			Updater.UpdateResult result = updater.getResult();
+			switch(result) {
+			case SUCCESS:
+				getLogger().info("Found new version; Updating. Reload or Restart Server to finalize.");
+				break;
+			case DISABLED:
+				break;
+			case FAIL_APIKEY:
+				getLogger().info("An invalid API key was provided. Please ensure you have the correct key in the Updater/config.yml file.");
+				break;
+			case FAIL_BADID:
+				break;
+			case FAIL_DBO:
+				getLogger().info("Unable to contact dev.bukkit.org; unable to check for update");
+				break;
+			case FAIL_DOWNLOAD:
+				getLogger().info("A new version is available, but failed to download it.");
+				break;
+			case FAIL_NOVERSION:
+				break;
+			case NO_UPDATE:
+				break;
+			case UPDATE_AVAILABLE:
+				break;
+			}
+		}
+		else if(this.getConfig().getBoolean("check-for-updates")) {
+			Updater updater = new Updater(this, 78377, this.getFile(), Updater.UpdateType.NO_DOWNLOAD, false);
+			
+			if(updater.getResult().equals(Updater.UpdateResult.UPDATE_AVAILABLE)) {
+				getLogger().info("A new version of NoEscape is available! Please update soon!");
+
+			}
+		}
 		
 		getCommand("noescape").setExecutor(this);
 		getServer().getPluginManager().registerEvents(new NoEscapeListener(this), this);

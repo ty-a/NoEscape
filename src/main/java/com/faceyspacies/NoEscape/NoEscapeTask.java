@@ -27,7 +27,5 @@ public class NoEscapeTask extends BukkitRunnable {
 	@Override
 	public void run() {
 		NoEscape.NoEscapePlayers.remove(player);
-
 	}
-
 }
