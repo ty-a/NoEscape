@@ -29,7 +29,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -276,44 +275,29 @@ public class NoEscapeListener implements Listener {
 		}
 		
 		Player player = event.getPlayer();
+		
+		if(!(plugin.getConfig().getBoolean("while-falling-allow-commands"))) {
+			// we do not allow commands while falling, so we will check!
+			Block belowBlock = event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN);
+			
+			if(!(event.getPlayer().getGameMode() == GameMode.CREATIVE)) { // make sure they aren't in creative
+				if(belowBlock.getType().equals(Material.AIR)) {
+					// the block below them is air
+					if(!(player).hasPermission("noescape.bypass")) {
+						event.setCancelled(true);
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("message")));
+						return;
+					}
+					else {
+						return; // player can bypass
+					}
+				}
+			}
+		}
+		
 		if(NoEscape.NoEscapePlayers.contains(player)) {
 			event.setCancelled(true);
 			player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("message")));
-		}
-	}
-	
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void onPlayerMoveEvent(PlayerMoveEvent event) {
-		if(event.isCancelled())
-			return;
-		
-		if(plugin.getConfig().getBoolean("while-falling-allow-commands"))
-			return; // if we'll allow, nothing to do
-		
-		if(event.getPlayer().getGameMode() == GameMode.CREATIVE)
-			return; // if the player is in creative, no reason to continue
-		
-		Block belowBlock = event.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN);
-		Block currBlock;
-		int numberOfAirBlocks = 0;
-
-		if(belowBlock.getType().equals(Material.AIR)) {
-			numberOfAirBlocks++;
-			
-			for(int i = 1; i <= plugin.getConfig().getInt("air-amount-to-count"); i++) {
-				currBlock = belowBlock.getRelative(BlockFace.DOWN);
-				if(currBlock.getType().equals(Material.AIR)) {
-					belowBlock = currBlock;
-					numberOfAirBlocks++;
-				} else {
-					break;
-				}
-			}
-			// we are above air
-			
-			if(numberOfAirBlocks >= plugin.getConfig().getInt("air-amount-to-count")) {
-				createTask(event.getPlayer());
-			}
 		}
 	}
 	

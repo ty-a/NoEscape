@@ -21,10 +21,6 @@ PvP: false
 
 #If a player is falling, should we let them use commands?
 while-falling-allow-commands: false
-#How many blocks should be beneath them to prevent command useage?
-#Note: Setting this too low can mean you're unable to use commands after jumping or 
-#      walking over the edge of a steep hill
-air-amount-to-count: 5
 
 
 #Should we let players use commands while drowning?
