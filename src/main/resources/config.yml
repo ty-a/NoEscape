@@ -60,7 +60,7 @@ ignore-void: false
 #Should we let players use commands after committing suicide by /kill?
 ignore-suicide: true
 #Should we disable commands from custom sources (such as other plugins)?
-ignore-custom = false
+ignore-custom: false
 
 #List of worlds that ignore the plugin.
 disabled-in-worlds: 
