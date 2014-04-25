@@ -96,6 +96,15 @@ public class NoEscape extends JavaPlugin {
 			}
 			
 			this.reloadConfig();
+			safeMobs = null;
+			safeMobs = new LinkedList<EntityType>();
+			
+			List<String> safeMobsFromConfig = this.getConfig().getStringList("safe-mobs");
+			for(String element: safeMobsFromConfig) {
+				element = element.toUpperCase().replace(" ", "_");
+				if(EntityType.valueOf(element) != null )
+					safeMobs.add(EntityType.valueOf(element));
+			}	
 			sender.sendMessage("Reloaded the config");
 			return true;
 		} 

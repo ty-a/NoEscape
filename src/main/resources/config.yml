@@ -23,6 +23,8 @@ PvP: false
 while-falling-allow-commands: false
 
 
+#Should we let players use commands after taking damage from hitting the ground?
+ignore-falling: true
 #Should we let players use commands while drowning?
 ignore-drowning: false
 #Should we let players use commands while starving?
